@@ -1,1 +1,1 @@
-https://dash-testnet.netlify.app
+https://dashplatform.app
