@@ -68,6 +68,10 @@ const useStyles = createUseStyles({
     marginRight: "24px",
     cursor: "pointer",
     filter: "contrast(60%)",
+    transition: "all 0.2s",
+    "&:hover": {
+      filter: "contrast(10%)",
+    },
   },
   confirmation: { color: "#454545", fontSize: "18px" },
   [`@media (min-width: ${Breakpoints.sm}px)`]: {
