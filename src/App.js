@@ -6,7 +6,7 @@ import identityLogo from "./assets/identity.png";
 import { createUseStyles } from "react-jss";
 import CodeBlock from "./CodeBlock";
 import Accordion from "./Accordion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import cashLogo from "./assets/cashLogo.svg";
 import * as animationData from "./assets/done.json";
 import Lottie from "react-lottie";
@@ -92,6 +92,11 @@ const useStyles = createUseStyles({
 function App() {
   const styles = useStyles();
   const [step, setStep] = useState(0);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [step]);
+
   return (
     <div style={{ minHeight: "100vh" }}>
       <div className={styles.sectionContainer}>
