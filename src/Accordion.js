@@ -58,7 +58,7 @@ export default function Accordion({ children, step, setStep, phase }) {
               ? "Create and Fund a Wallet"
               : phase === 2
               ? "Register an Identity"
-              : null}
+              : "Send Funds"}
           </div>
           <div style={{ position: "absolute", left: "-67px", top: "-26px" }}>
             {step > phase && (
