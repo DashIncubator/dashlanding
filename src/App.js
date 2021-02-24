@@ -10,6 +10,7 @@ import { useState } from "react";
 import cashLogo from "./assets/cashLogo.svg";
 import * as animationData from "./assets/done.json";
 import Lottie from "react-lottie";
+import { Breakpoints } from "./utils";
 
 const defaultOptions = {
   loop: false,
@@ -26,9 +27,10 @@ const useStyles = createUseStyles({
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
-    padding: "200px 64px 200px 64px",
     color: "#454545",
     backgroundColor: "#fff",
+    padding: "48px 40px 48px 40px",
+    position: "relative",
   },
   sectionTitle: {
     fontSize: "28px",
@@ -57,6 +59,19 @@ const useStyles = createUseStyles({
   },
   sectionImage: { width: "400px", marginBottom: "48px" },
   socialLogo: { width: "40px", cursor: "pointer", filter: "brightness(60%)" },
+  infoContainer: { width: "100%", position: "relative" },
+  [`@media (min-width: ${Breakpoints.sm}px)`]: {
+    infoContainer: { width: "480px", position: "relative" },
+    sectionContainer: {
+      display: "flex",
+      justifyContent: "center",
+      flexWrap: "wrap",
+      color: "#454545",
+      backgroundColor: "#fff",
+      padding: "188px 64px 108px 64px",
+      position: "relative",
+    },
+  },
 });
 
 function App() {
@@ -65,14 +80,8 @@ function App() {
   return (
     <div style={{ minHeight: "100vh" }}>
       <img src={dashLogo} alt="logo" className={styles.logo} />
-      <div
-        className={styles.sectionContainer}
-        style={{
-          padding: "188px 64px 108px 64px",
-          position: "relative",
-        }}
-      >
-        <div style={{ width: "480px", position: "relative" }}>
+      <div className={styles.sectionContainer}>
+        <div className={styles.infoContainer}>
           <div
             style={{
               fontWeight: 500,
