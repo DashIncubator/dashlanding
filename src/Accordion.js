@@ -5,6 +5,7 @@ import { createUseStyles } from "react-jss";
 import caretDown from "./assets/caretDown.svg";
 import Lottie from "react-lottie";
 import * as animationData from "./assets/done.json";
+import { Breakpoints } from "./utils";
 
 const defaultOptions = {
   loop: false,
@@ -31,6 +32,18 @@ const useStyles = createUseStyles({
     fontSize: "18px",
     fontWeight: 500,
     color: "#4c555a",
+  },
+  success: {
+    position: "absolute",
+    left: "-56px",
+    top: "-26px",
+  },
+  [`@media (min-width: ${Breakpoints.sm}px)`]: {
+    success: {
+      position: "absolute",
+      left: "-67px",
+      top: "-26px",
+    },
   },
 });
 
@@ -60,7 +73,7 @@ export default function Accordion({ children, step, setStep, phase }) {
               ? "Register an Identity"
               : "Send Funds"}
           </div>
-          <div style={{ position: "absolute", left: "-67px", top: "-26px" }}>
+          <div className={styles.success}>
             {step > phase && (
               <Lottie options={defaultOptions} height={80} width={80} />
             )}

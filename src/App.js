@@ -22,14 +22,14 @@ const defaultOptions = {
 };
 
 const useStyles = createUseStyles({
-  logo: { position: "absolute", top: "32px", left: "32px", width: "64px" },
+  logo: { position: "absolute", top: "-16px", left: "-108px", width: "64px" },
   sectionContainer: {
     display: "flex",
     justifyContent: "center",
     flexWrap: "wrap",
     color: "#454545",
     backgroundColor: "#fff",
-    padding: "48px 40px 48px 40px",
+    padding: "48px 32px 48px 32px",
     position: "relative",
   },
   sectionTitle: {
@@ -79,9 +79,9 @@ function App() {
   const [step, setStep] = useState(0);
   return (
     <div style={{ minHeight: "100vh" }}>
-      <img src={dashLogo} alt="logo" className={styles.logo} />
       <div className={styles.sectionContainer}>
         <div className={styles.infoContainer}>
+          <img src={dashLogo} alt="logo" className={styles.logo} />
           <div
             style={{
               fontWeight: 500,
