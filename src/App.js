@@ -11,6 +11,9 @@ import cashLogo from "./assets/cashLogo.svg";
 import * as animationData from "./assets/done.json";
 import Lottie from "react-lottie";
 import { Breakpoints } from "./utils";
+import discord from "./assets/discord.svg";
+import twitter from "./assets/twitter.svg";
+import github from "./assets/github.svg";
 
 const defaultOptions = {
   loop: false,
@@ -60,6 +63,13 @@ const useStyles = createUseStyles({
   sectionImage: { width: "400px", marginBottom: "48px" },
   socialLogo: { width: "40px", cursor: "pointer", filter: "brightness(60%)" },
   infoContainer: { width: "100%", position: "relative" },
+  socialImage: {
+    width: "40px",
+    marginRight: "24px",
+    cursor: "pointer",
+    filter: "contrast(60%)",
+  },
+  confirmation: { color: "#454545", fontSize: "18px" },
   [`@media (min-width: ${Breakpoints.sm}px)`]: {
     infoContainer: { width: "480px", position: "relative" },
     sectionContainer: {
@@ -71,6 +81,7 @@ const useStyles = createUseStyles({
       padding: "188px 64px 108px 64px",
       position: "relative",
     },
+    confirmation: { color: "#454545", fontSize: "24px" },
   },
 });
 
@@ -300,6 +311,47 @@ sendFunds()
                 />
               </div>
             </Accordion>
+          )}
+          {step > 3 && (
+            <FadeIn>
+              <div style={{ marginTop: "88px" }}>
+                <div className={styles.confirmation}>
+                  You're all set! View the full documentation at{" "}
+                  <a
+                    href="https://dashplatform.readme.io/docs"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "#008de4" }}
+                  >
+                    dashplatform.readme.io/docs
+                  </a>
+                </div>
+                <div
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    flexWrap: "wrap",
+                    marginTop: "24px",
+                  }}
+                >
+                  <img
+                    src={discord}
+                    alt="discord"
+                    className={styles.socialImage}
+                  />
+                  <img
+                    src={twitter}
+                    alt="twitter"
+                    className={styles.socialImage}
+                  />
+                  <img
+                    src={github}
+                    alt="github"
+                    className={styles.socialImage}
+                  />
+                </div>
+              </div>
+            </FadeIn>
           )}
           <div style={{ position: "absolute", left: 660, top: 120 }}>
             <div
