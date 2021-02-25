@@ -343,21 +343,39 @@ sendFunds()
                     marginTop: "24px",
                   }}
                 >
-                  <img
-                    src={discord}
-                    alt="discord"
-                    className={styles.socialImage}
-                  />
-                  <img
-                    src={twitter}
-                    alt="twitter"
-                    className={styles.socialImage}
-                  />
-                  <img
-                    src={github}
-                    alt="github"
-                    className={styles.socialImage}
-                  />
+                  <a
+                    href="https://discord.com/invite/mU79ZWx"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={discord}
+                      alt="discord"
+                      className={styles.socialImage}
+                    />
+                  </a>
+                  <a
+                    href="https://twitter.com/dashpay"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={twitter}
+                      alt="twitter"
+                      className={styles.socialImage}
+                    />
+                  </a>
+                  <a
+                    href="https://github.com/dashevo"
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    <img
+                      src={github}
+                      alt="github"
+                      className={styles.socialImage}
+                    />
+                  </a>
                 </div>
               </div>
             </FadeIn>
