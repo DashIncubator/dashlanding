@@ -4,7 +4,7 @@ import sdkLogo from "./assets/sdk.png";
 import paymentLogo from "./assets/payments.png";
 import identityLogo from "./assets/identity.png";
 import { createUseStyles } from "react-jss";
-import CodeBlock from "./CodeBlock";
+import CustomCodeBlock from "./CustomCodeBlock";
 import Accordion from "./Accordion";
 import { useState, useEffect } from "react";
 import cashLogo from "./assets/cashLogo.svg";
@@ -14,6 +14,7 @@ import { Breakpoints } from "./utils";
 import discord from "./assets/discord.svg";
 import twitter from "./assets/twitter.svg";
 import github from "./assets/github.svg";
+import { atomOneLight, CodeBlock } from "react-code-blocks";
 
 const defaultOptions = {
   loop: false,
@@ -55,7 +56,7 @@ const useStyles = createUseStyles({
     color: "#4c555a",
     marginTop: "24px",
   },
-  codeblock: {
+  CustomCodeBlock: {
     backgroundColor: "#f6f8fa",
     padding: "8px 16px 8px 16px",
     fontSize: "12px",
@@ -118,12 +119,12 @@ function App() {
             <div className={styles.sectionSubtitle}>
               1. Install the Dash SDK
             </div>
-            <CodeBlock code={"npm i dash"} />
+            <CustomCodeBlock code={"npm i dash"} />
             <hr style={{ opacity: 0.3, marginTop: "32px" }} />
             <div className={styles.sectionSubtitle}>
               2. Connect to Dash Testnet
             </div>
-            <CodeBlock
+            <CustomCodeBlock
               code={`const Dash = require('dash');
 
 const client = new Dash.Client();
@@ -145,7 +146,7 @@ connect()
                   <div className={styles.sectionSubtitle}>
                     1. Generate your wallet
                   </div>
-                  <CodeBlock
+                  <CustomCodeBlock
                     code={`const Dash = require('dash');
 
 const clientOpts = {
@@ -172,14 +173,24 @@ createWallet()
   .catch((e) => console.error('Something went wrong:', e))
   .finally(() => client.disconnect());`}
                   />
+                  <div style={{ fontWeight: "bold", fontSize: "14px" }}>
+                    <span style={{ color: "red" }}>*</span>{" "}
+                    client.getWalletAccount() may take 5+ minutes to call
+                  </div>
                   <hr style={{ opacity: 0.3, marginTop: "32px" }} />
                   <div className={styles.sectionSubtitle}>Example response</div>
-                  <CodeBlock
-                    code={`Mnemonic: 
+                  <div style={{ fontSize: "13px" }}>
+                    <CodeBlock
+                      text={`Mnemonic: 
   thrive wolf habit timber birth service crystal patient tiny depart tower focus    
 Unused address: 
   yXF7LsyajRvJGX96vPHBmo9Dwy9zEvzkbh`}
-                  />
+                      showLineNumbers={false}
+                      language={"javascript"}
+                      theme={atomOneLight}
+                      codeBlock
+                    />
+                  </div>
                   <div style={{ fontWeight: "bold", fontSize: "14px" }}>
                     <span style={{ color: "red" }}>*</span> Save the mnenomic
                     and address for the next step
@@ -201,6 +212,11 @@ Unused address:
                     <br />
                     Send test funds to your "unused address" from the console
                     output.
+                    <div style={{ fontWeight: "bold", fontSize: "14px" }}>
+                      <span style={{ color: "red" }}>*</span> The captcha in the
+                      faucet doesn't always display an image/code. This can be
+                      ignored.
+                    </div>
                   </div>
                 </div>
               </Accordion>
@@ -210,15 +226,24 @@ Unused address:
             <Accordion step={step} setStep={setStep} phase={2}>
               <div>
                 <div className={styles.sectionSubtitle}>
-                  1. Register a new identity
+                  1. Register a new identity (Read more about indentities{" "}
+                  <a
+                    href="https://dashplatform.readme.io/docs/explanation-identity"
+                    target="_blank"
+                    rel="noreferrer"
+                    style={{ color: "#008de4" }}
+                  >
+                    here
+                  </a>
+                  )
                 </div>
-                <CodeBlock
+                <CustomCodeBlock
                   code={`const Dash = require('dash');
 
 const clientOpts = {
   network: 'testnet',
   wallet: {
-    mnemonic: 'a Dash wallet mnemonic with testnet funds goes here',
+    mnemonic: '{MY_MNEMONIC}',
   },
 };
 const client = new Dash.Client(clientOpts);
@@ -234,7 +259,7 @@ createIdentity()
                 />
                 <hr style={{ opacity: 0.3, marginTop: "32px" }} />
                 <div className={styles.sectionSubtitle}>Example response</div>
-                <CodeBlock
+                <CustomCodeBlock
                   code={`Identity:
   {
     protocolVersion: 0,
@@ -259,19 +284,19 @@ createIdentity()
                 <div className={styles.sectionSubtitle}>
                   2. Topup your identity's balance
                 </div>
-                <CodeBlock
+                <CustomCodeBlock
                   code={`const Dash = require('dash');
 
 const clientOpts = {
   network: 'testnet',
   wallet: {
-    mnemonic: 'a Dash wallet mnemonic with testnet funds goes here',
+    mnemonic: '{MY_MNEMONIC}',
   },
 };
 const client = new Dash.Client(clientOpts);
 
 const topupIdentity = async () => {
-  const identityId = 'an identity ID goes here';
+  const identityId = '{MY_IDENTITY_ID}';
   const topUpAmount = 1000; // Number of duffs
 
   await client.platform.identities.topUp(identityId, topUpAmount);
@@ -280,7 +305,7 @@ const topupIdentity = async () => {
 
 topupIdentity()
   .then((d) => console.log('Identity credit balance: ', d.balance))
-  .catch((e) => console.error('Something went wrong:\n', e))
+  .catch((e) => console.error('Something went wrong:', e))
   .finally(() => client.disconnect());`}
                 />
               </div>
@@ -292,13 +317,13 @@ topupIdentity()
                 <div className={styles.sectionSubtitle}>
                   1. Send Dash to an address
                 </div>
-                <CodeBlock
+                <CustomCodeBlock
                   code={`const Dash = require('dash');
 
 const clientOpts = {
   network: 'testnet',
   wallet: {
-    mnemonic: 'your wallet mnemonic goes here'
+    mnemonic: '{MY_MNEMONIC}'
   },
 };
 const client = new Dash.Client(clientOpts);
@@ -307,15 +332,15 @@ const sendFunds = async () => {
   const account = await client.getWalletAccount();
 
   const transaction = account.createTransaction({
-    recipient: 'yixnmigzC236WmTXp9SBZ42csyp9By6Hw8', // Evonet faucet
+    recipient: 'yixnmigzC236WmTXp9SBZ42csyp9By6Hw8', // Testnet faucet
     satoshis: 100000000, // 1 Dash
   });
   return account.broadcastTransaction(transaction);
 };
 
 sendFunds()
-  .then((d) => console.log('Transaction broadcast!\nTransaction ID:', d))
-  .catch((e) => console.error('Something went wrong:\n', e))
+  .then((d) => console.log('Transaction broadcast! Transaction ID:', d))
+  .catch((e) => console.error('Something went wrong:', e))
   .finally(() => client.disconnect());`}
                 />
               </div>
