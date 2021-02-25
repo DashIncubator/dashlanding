@@ -309,6 +309,38 @@ topupIdentity()
   .finally(() => client.disconnect());`}
                 />
               </div>
+              <hr style={{ opacity: 0.3, marginTop: "32px" }} />
+              <div className={styles.sectionSubtitle}>
+                3. Register a Name for Your Identity
+              </div>
+              <CustomCodeBlock
+                code={`const Dash = require('dash');
+
+const clientOpts = {
+  wallet: {
+    mnemonic: '{MY_MNEMONIC}',
+  },
+};
+const client = new Dash.Client(clientOpts);
+
+const registerName = async () => {
+  const platform = client.platform;
+
+  const identity = await platform.identities.get('{MY_IDENTITY_ID}');
+  const nameRegistration = await platform.names.register(
+    '<identity name goes here>.dash',
+    { dashUniqueIdentityId: identity.getId() },
+    identity,
+  );
+
+  return nameRegistration;
+};
+
+registerName()
+  .then((d) => console.log('Name registered:', d.toJSON()))
+  .catch((e) => console.error('Something went wrong:', e))
+  .finally(() => client.disconnect());`}
+              />
             </Accordion>
           )}
           {step > 2 && (
