@@ -66,12 +66,12 @@ export default function Accordion({ children, step, setStep, phase }) {
         >
           <div style={{ color: "#008de4" }}>
             {phase === 0
-              ? "Install and Connect"
+              ? "Install Dependencies"
               : phase === 1
-              ? "Create and Fund a Wallet"
+              ? "Generate a Temporary Address and Fund it"
               : phase === 2
-              ? "Register an Identity"
-              : "Send Funds"}
+              ? "Download and Initialize mn-bootstrap"
+              : "Register, Sync, and Start Your Masternode"}
           </div>
           <div className={styles.success}>
             {step > phase && (

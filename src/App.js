@@ -14,7 +14,9 @@ import { Breakpoints } from "./utils";
 import discord from "./assets/discord.svg";
 import twitter from "./assets/twitter.svg";
 import github from "./assets/github.svg";
-import { atomOneLight, CodeBlock } from "react-code-blocks";
+import guide1 from "./assets/guide1.png";
+import guide2 from "./assets/guide2.png";
+import guide3 from "./assets/guide3.png";
 
 const defaultOptions = {
   loop: false,
@@ -112,31 +114,24 @@ function App() {
             Dash Masternode <span style={{ fontWeight: 900 }}>Quickstart</span>
           </div>
           <div className={styles.sectionDetails}>
-            Get up and running with Dash in a few simple steps.
+            Get up and running with a Masternode on Testnet.
           </div>
           <hr style={{ opacity: 0.3, marginBottom: "24px" }} />
           <Accordion step={step} setStep={setStep} phase={0}>
             <div className={styles.sectionSubtitle}>
-              1. Install the Dash SDK
-            </div>
-            <CustomCodeBlock code={"npm i dash"} />
-            <hr style={{ opacity: 0.3, marginTop: "32px" }} />
-            <div className={styles.sectionSubtitle}>
-              2. Connect to Dash Testnet
+              Developers requiring a local masternode can get started quickly by
+              starting mn-bootstrap and providing a private key containing
+              collateral directly. Install dependencies if necessary (Docker,
+              NodeJS, NPM, Github CLI). Windows, macOS and Linux are supported,
+              the following example is under Ubuntu 20.04 LTS.:
             </div>
             <CustomCodeBlock
-              code={`const Dash = require('dash');
-
-const client = new Dash.Client();
-
-async function connect() {
-  return await client.getDAPIClient().core.getBestBlockHash();
-}
-
-connect()
-  .then((d) => console.log('Connected. Best block hash:', d))
-  .catch((e) => console.error('Something went wrong:', e))
-  .finally(() => client.disconnect())`}
+              code={`curl -sL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+sudo apt-add-repository https://cli.github.com/packages
+sudo apt install -y nodejs git docker.io docker-compose gh
+sudo usermod -aG docker $USER
+newgrp docker`}
             />
           </Accordion>
           {step > 0 && (
@@ -144,79 +139,41 @@ connect()
               <Accordion step={step} setStep={setStep} phase={1}>
                 <div>
                   <div className={styles.sectionSubtitle}>
-                    1. Generate your wallet
-                  </div>
-                  <CustomCodeBlock
-                    code={`const Dash = require('dash');
-
-const clientOpts = {
-  network: 'testnet',
-  wallet: {
-    mnemonic: null, // this indicates that we want a new wallet to be generated
-                              // if you want to get a new address for an existing wallet
-                              // replace 'null' with an existing wallet mnemonic
-  },
-};
-
-const client = new Dash.Client(clientOpts);
-
-const createWallet = async () => {
-  const account = await client.getWalletAccount();
-
-  const mnemonic = client.wallet.exportWallet();
-  const address = account.getUnusedAddress();
-  console.log('Mnemonic:', mnemonic);
-  console.log('Unused address:', address.address);
-};
-
-createWallet()
-  .catch((e) => console.error('Something went wrong:', e))
-  .finally(() => client.disconnect());`}
-                  />
-                  <div style={{ fontWeight: "bold", fontSize: "14px" }}>
-                    <span style={{ color: "red" }}>*</span>{" "}
-                    client.getWalletAccount() may take 5+ minutes to call
-                  </div>
-                  <hr style={{ opacity: 0.3, marginTop: "32px" }} />
-                  <div className={styles.sectionSubtitle}>Example response</div>
-                  <div style={{ fontSize: "13px" }}>
-                    <CodeBlock
-                      text={`Mnemonic: 
-  thrive wolf habit timber birth service crystal patient tiny depart tower focus    
-Unused address: 
-  yXF7LsyajRvJGX96vPHBmo9Dwy9zEvzkbh`}
-                      showLineNumbers={false}
-                      language={"javascript"}
-                      theme={atomOneLight}
-                      codeBlock
-                    />
-                  </div>
-                  <div style={{ fontWeight: "bold", fontSize: "14px" }}>
-                    <span style={{ color: "red" }}>*</span> Save the mnenomic
-                    and address for the next step
-                  </div>
-                  <hr style={{ opacity: 0.3, marginTop: "32px" }} />
-                  <div className={styles.sectionSubtitle}>
-                    2. Fund your wallet with test funds
-                  </div>
-                  <div>
-                    Using the faucet at: <br />
+                    Generate a temporary address by running the script on{" "}
                     <a
-                      style={{ color: "#008de4" }}
-                      href="http://testnet-452625393.us-west-2.elb.amazonaws.com/"
-                      target="_blank"
+                      href="https://repl.it/@strophy/Generate-Dash-Address"
                       rel="noreferrer"
+                      target="_blank"
                     >
-                      testnet-452625393.us-west-2.elb.amazonaws.com
+                      this website
                     </a>
-                    <br />
-                    Send test funds to your "unused address" from the console
-                    output.
-                    <div style={{ fontWeight: "bold", fontSize: "14px" }}>
-                      <span style={{ color: "red" }}>*</span> The captcha in the
-                      faucet doesn't always display an image/code. This can be
-                      ignored.
-                    </div>
+                  </div>
+                  <img src={guide1} alt="guide1" style={{ width: "100%" }} />
+                  <div
+                    style={{ margin: "16px 0px" }}
+                    className={styles.sectionSubtitle}
+                  >
+                    Simply press the play button and wait for the output, then
+                    copy the generated address
+                  </div>
+                  <img src={guide2} alt="guide2" style={{ width: "100%" }} />
+                  <hr style={{ opacity: 0.3, margin: "32px 0px" }} />
+                  <div className={styles.sectionSubtitle}>
+                    Now go to{" "}
+                    <a
+                      href="https://testnet-faucet.dash.org/"
+                      rel="noreferrer"
+                      target="_blank"
+                    >
+                      the testnet faucet
+                    </a>{" "}
+                    and request 1000+ tDash to your new address using the promo
+                    code ‘masternode’
+                    <img
+                      src={guide3}
+                      alt="guide2"
+                      style={{ width: "100%", marginTop: "24px" }}
+                    />
                   </div>
                 </div>
               </Accordion>
@@ -226,155 +183,59 @@ Unused address:
             <Accordion step={step} setStep={setStep} phase={2}>
               <div>
                 <div className={styles.sectionSubtitle}>
-                  1. Register a new identity (Read more about indentities{" "}
-                  <a
-                    href="https://dashplatform.readme.io/docs/explanation-identity"
-                    target="_blank"
-                    rel="noreferrer"
-                    style={{ color: "#008de4" }}
-                  >
-                    here
-                  </a>
-                  )
+                  Run the following commands to download mn-bootstrap
                 </div>
                 <CustomCodeBlock
-                  code={`const Dash = require('dash');
-
-const clientOpts = {
-  network: 'testnet',
-  wallet: {
-    mnemonic: '{MY_MNEMONIC}',
-  },
-};
-const client = new Dash.Client(clientOpts);
-
-const createIdentity = async () => {
-  return client.platform.identities.register();
-};
-
-createIdentity()
-  .then((d) => console.log('Identity:', d.toJSON()))
-  .catch((e) => console.error('Something went wrong:', e))
-  .finally(() => client.disconnect());`}
+                  code={`git clone https://github.com/dashevo/mn-bootstrap.git
+cd mn-bootstrap
+gh pr checkout 288
+npm install && sudo npm link`}
                 />
-                <hr style={{ opacity: 0.3, marginTop: "32px" }} />
-                <div className={styles.sectionSubtitle}>Example response</div>
-                <CustomCodeBlock
-                  code={`Identity:
-  {
-    protocolVersion: 0,
-    id: '49E8fS4TbVpch7zjHTbPkcLYyKZsHNaBeVCm6gbKTUcA',
-    publicKeys: [
-      {
-        id: 0,
-        type: 0,
-        data: 'A5AfdTYNNkQj+Dl845BjfeiOc+6MHNQIA2oX2IS9VB6i'
-      }
-    ],
-    balance: 0,
-    revision: 0
-  }`}
-                />
-                <div style={{ fontWeight: "bold", fontSize: "14px" }}>
-                  <span style={{ color: "red" }}>*</span> Make a note of the
-                  returned identity <b>id</b> as it will be used next.
-                </div>
-                <hr style={{ opacity: 0.3, marginTop: "32px" }} />
-
                 <div className={styles.sectionSubtitle}>
-                  2. Topup your identity's balance
+                  If you are using Windows, you will need to change the path for
+                  two log files. Modify the example below with a log path of
+                  your choosing:
                 </div>
                 <CustomCodeBlock
-                  code={`const Dash = require('dash');
-
-const clientOpts = {
-  network: 'testnet',
-  wallet: {
-    mnemonic: '{MY_MNEMONIC}',
-  },
-};
-const client = new Dash.Client(clientOpts);
-
-const topupIdentity = async () => {
-  const identityId = '{MY_IDENTITY_ID}';
-  const topUpAmount = 1000; // Number of duffs
-
-  await client.platform.identities.topUp(identityId, topUpAmount);
-  return client.platform.identities.get(identityId);
-};
-
-topupIdentity()
-  .then((d) => console.log('Identity credit balance: ', d.balance))
-  .catch((e) => console.error('Something went wrong:', e))
-  .finally(() => client.disconnect());`}
+                  code={`git merge windows-support
+mn config:set platform.drive.abci.log.prettyFile.path {YOUR_LOG_PATH}.log
+mn config:set platform.drive.abci.log.jsonFile.path {YOUR_LOG_PATH}.log`}
                 />
               </div>
-              <hr style={{ opacity: 0.3, marginTop: "32px" }} />
-              <div className={styles.sectionSubtitle}>
-                3. Register a Name for Your Identity
-              </div>
-              <CustomCodeBlock
-                code={`const Dash = require('dash');
-
-const clientOpts = {
-  wallet: {
-    mnemonic: '{MY_MNEMONIC}',
-  },
-};
-const client = new Dash.Client(clientOpts);
-
-const registerName = async () => {
-  const platform = client.platform;
-
-  const identity = await platform.identities.get('{MY_IDENTITY_ID}');
-  const nameRegistration = await platform.names.register(
-    '<identity name goes here>.dash',
-    { dashUniqueIdentityId: identity.getId() },
-    identity,
-  );
-
-  return nameRegistration;
-};
-
-registerName()
-  .then((d) => console.log('Name registered:', d.toJSON()))
-  .catch((e) => console.error('Something went wrong:', e))
-  .finally(() => client.disconnect());`}
-              />
             </Accordion>
           )}
           {step > 2 && (
             <Accordion step={step} setStep={setStep} phase={3}>
               <div>
                 <div className={styles.sectionSubtitle}>
-                  1. Send Dash to an address
+                  Register your masternode on the network as follows:
                 </div>
                 <CustomCodeBlock
-                  code={`const Dash = require('dash');
-
-const clientOpts = {
-  network: 'testnet',
-  wallet: {
-    mnemonic: '{MY_MNEMONIC}'
-  },
-};
-const client = new Dash.Client(clientOpts);
-
-const sendFunds = async () => {
-  const account = await client.getWalletAccount();
-
-  const transaction = account.createTransaction({
-    recipient: 'yixnmigzC236WmTXp9SBZ42csyp9By6Hw8', // Testnet faucet
-    satoshis: 100000000, // 1 Dash
-  });
-  return account.broadcastTransaction(transaction);
-};
-
-sendFunds()
-  .then((d) => console.log('Transaction broadcast! Transaction ID:', d))
-  .catch((e) => console.error('Something went wrong:', e))
-  .finally(() => client.disconnect());`}
+                  code={`mn setup testnet masternode -p <funding-private-key>`}
                 />
+                <div className={styles.sectionSubtitle}>
+                  Wait until sync and registration are complete. Then start the
+                  masternode:
+                </div>
+                <CustomCodeBlock code={`mn start`} />
+                <div className={styles.sectionSubtitle}>
+                  Your masternode is now providing service on the following
+                  local ports:
+                </div>
+                <CustomCodeBlock
+                  code={`Core P2P:     19999
+Core RPC:     19998
+Platform P2P: 26656
+Platform RPC: 26657
+DAPI HTTP:    3000
+DAPI gRPC:    3010`}
+                />
+              </div>
+              <div className={styles.sectionSubtitle}>
+                Note that platform sync will take some time after core sync is
+                complete. You can monitor progress with{" "}
+                <b>mn status:platform</b> or use <b>mn --help</b> to view other
+                commands.
               </div>
             </Accordion>
           )}
@@ -384,12 +245,12 @@ sendFunds()
                 <div className={styles.confirmation}>
                   You're all set! View the full documentation at{" "}
                   <a
-                    href="https://dashplatform.readme.io/docs"
+                    href="https://docs.dash.org/en/stable/masternodes/setup-testnet.html#developer-installation"
                     target="_blank"
                     rel="noreferrer"
                     style={{ color: "#008de4" }}
                   >
-                    dashplatform.readme.io/docs
+                    docs.dash.org
                   </a>
                 </div>
                 <div
