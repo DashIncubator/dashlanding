@@ -109,7 +109,7 @@ function App() {
             }}
             className={styles.sectionTitle}
           >
-            Dash Platform <span style={{ fontWeight: 900 }}>Quickstart</span>
+            Dash Masternode <span style={{ fontWeight: 900 }}>Quickstart</span>
           </div>
           <div className={styles.sectionDetails}>
             Get up and running with Dash in a few simple steps.
